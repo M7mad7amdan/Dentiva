@@ -9,40 +9,44 @@ import { ArrowUpLeft, ChevronLeft } from "lucide-react";
 const WHATSAPP_NUMBER = "970594151151";
 
 const WHATSAPP_MESSAGE =
-  "مرحبًا، أرغب في حجز موعد لدى مركز الدكتور بشار المسالمة لطب الأسنان.";
+  "مرحبًا، اطلعت على مميزات مركز الدكتور بشار المسالمة لطب الأسنان وأرغب في الاستفسار وحجز موعد.";
 
 const defaultImages = [
   {
-    src: "/AboutUsImg/FirstImg.png",
-    alt: "صورة توضيحية لبيئة علاج الأسنان",
-    title: "الممارسة المهنية",
+    src: "/WhyChooseUs/FirstImg.jpg",
+    alt: "صورة من معرض عيادة الدكتور بشار المسالمة",
+    title: "معرفة تواكب التطور",
     description:
-      "يجمع الدكتور بشار المسالمة بين الممارسة المهنية والاطلاع على أحدث أساليب طب الأسنان،",
+      "يجمع الدكتور بشار المسالمة بين الممارسة المهنية والاطلاع على أحدث أساليب طب الأسنان.",
   },
   {
-    src: "/AboutUsImg/SecondImg.png",
-    alt: "صورة تعبيرية عن الابتسامة الطبيعية",
-    title: "التدريب في ألمانيا",
+    src: "/WhyChooseUs/SecondImg.jpg",
+    alt: "صورة من معرض تجهيزات وبيئة عيادة الأسنان",
+    title: "الاهتمام بكل تفصيلة",
     description:
-      "مدعومًا بتدريب في نخبة من أبرز العيادات الألمانية.",
+      "نؤمن بأن العناية الجيدة تبدأ من التفاصيل الصغيرة، من التقييم الأول وحتى متابعة الحالة.",
   },
   {
-    src: "/AboutUsImg/ThirdImg.png",
-    alt: "صورة تعبيرية عن العناية بالأسنان",
-    title: "الدقة والمعايير العلمية",
+    src: "/WhyChooseUs/ThirdImg.jpg",
+    alt: "صورة توضيحية من معرض العيادة",
+    title: "ابتسامتك أولويتنا",
     description:
-      "يحرص على تقديم رعاية سنية قائمة على الدقة والمعايير العلمية، مع الاهتمام بأدق التفاصيل",
+      "نهتم بصحة الأسنان وجمال الابتسامة، مع مراعاة الاحتياجات الخاصة بكل حالة.",
   },
   {
-    src: "/AboutUsImg/ForthImg.png",
-    alt: "صورة توضيحية لفحص الأسنان",
-    title: "صحة فموية وابتسامة طبيعية",
+    src: "/WhyChooseUs/ForthImg.jpg",
+    alt: "صورة من معرض العناية بطب الأسنان",
+    title: "رعاية بأسس علمية",
     description:
-      "لتحقيق صحة فموية أفضل وابتسامة طبيعية ومتناسقة.",
+      "نعتمد على الدقة والمعايير العلمية في تقديم الرعاية، مع الاهتمام براحة المريض.",
   },
 ];
 
-function GalleryContent({ image, whatsappUrl, compact = false }) {
+function GalleryContent({
+  image,
+  whatsappUrl,
+  compact = false,
+}) {
   return (
     <div className="flex items-end justify-between gap-3">
       <div className="min-w-0 flex-1 text-right">
@@ -52,7 +56,9 @@ function GalleryContent({ image, whatsappUrl, compact = false }) {
               ? "text-[23px] sm:text-[25px]"
               : "text-[25px] xl:text-[28px]"
           }`}
-          style={{ fontFamily: '"AmiriCustom", serif' }}
+          style={{
+            fontFamily: '"AmiriCustom", serif',
+          }}
         >
           {image.title}
         </h3>
@@ -76,8 +82,8 @@ function GalleryContent({ image, whatsappUrl, compact = false }) {
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={`احجز موعدك عبر واتساب - ${image.title}`}
-          title="احجز موعدك عبر واتساب"
+          aria-label={`استفسر عبر واتساب - ${image.title}`}
+          title="تواصل معنا عبر واتساب"
           className={`flex shrink-0 items-center justify-center rounded-full bg-[#E1D7B8] text-[#3E4637] transition-all duration-300 hover:-translate-y-1 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
             compact ? "h-10 w-10" : "h-12 w-12"
           }`}
@@ -96,7 +102,10 @@ export default function GalleryAnimation({
   images = defaultImages,
 }) {
   const [hoveredIndex, setHoveredIndex] = useState(null);
-  const [activeMobileIndex, setActiveMobileIndex] = useState(0);
+
+  const [activeMobileIndex, setActiveMobileIndex] =
+    useState(0);
+
   const galleryRef = useRef(null);
   const reduceMotion = useReducedMotion();
 
@@ -109,21 +118,21 @@ export default function GalleryAnimation({
         mass: 1.05,
       };
 
-  const whatsappNumber = WHATSAPP_NUMBER.replace(/\D/g, "");
-
-  const whatsappUrl = whatsappNumber
-    ? `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-        WHATSAPP_MESSAGE
-      )}`
-    : null;
+  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+    WHATSAPP_MESSAGE
+  )}`;
 
   function handleGalleryScroll() {
     const container = galleryRef.current;
+
     if (!container) return;
 
     const cards = container.querySelectorAll(
       "[data-gallery-card]"
     );
+
+    const containerRight =
+      container.getBoundingClientRect().right;
 
     let closest = 0;
     let minDistance = Infinity;
@@ -131,7 +140,7 @@ export default function GalleryAnimation({
     cards.forEach((card, index) => {
       const distance = Math.abs(
         card.getBoundingClientRect().right -
-          container.getBoundingClientRect().right
+          containerRight
       );
 
       if (distance < minDistance) {
@@ -149,6 +158,7 @@ export default function GalleryAnimation({
 
   return (
     <>
+      {/* Desktop Gallery */}
       <div
         dir="rtl"
         className="hidden h-[510px] w-full gap-3 lg:flex"
@@ -169,7 +179,9 @@ export default function GalleryAnimation({
                 }
               }}
               onClick={() => setHoveredIndex(index)}
-              onFocusCapture={() => setHoveredIndex(index)}
+              onFocusCapture={() =>
+                setHoveredIndex(index)
+              }
               onBlurCapture={(event) => {
                 if (
                   !event.currentTarget.contains(
@@ -182,7 +194,8 @@ export default function GalleryAnimation({
               onKeyDown={(event) => {
                 if (
                   event.target === event.currentTarget &&
-                  (event.key === "Enter" || event.key === " ")
+                  (event.key === "Enter" ||
+                    event.key === " ")
                 ) {
                   event.preventDefault();
                   setHoveredIndex(index);
@@ -260,11 +273,12 @@ export default function GalleryAnimation({
         })}
       </div>
 
+      {/* Mobile & Tablet Gallery */}
       <div className="lg:hidden">
         <div
           ref={galleryRef}
           dir="rtl"
-          aria-label="معلومات عن الدكتور بشار المسالمة"
+          aria-label="معرض مميزات العيادة"
           onScroll={handleGalleryScroll}
           className="flex w-full snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain pb-5"
           style={{
@@ -308,6 +322,7 @@ export default function GalleryAnimation({
             aria-hidden="true"
           >
             <ChevronLeft size={18} />
+
             <span className="text-[13px]">
               اسحب لاستكشاف المزيد
             </span>
@@ -317,7 +332,10 @@ export default function GalleryAnimation({
             dir="ltr"
             className="text-[13px] tracking-wider text-[#8B8068]"
           >
-            {String(activeMobileIndex + 1).padStart(2, "0")}
+            {String(activeMobileIndex + 1).padStart(
+              2,
+              "0"
+            )}
             {" / "}
             {String(images.length).padStart(2, "0")}
           </span>

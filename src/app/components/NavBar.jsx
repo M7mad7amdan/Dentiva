@@ -23,7 +23,7 @@ const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent
 
 const links = [
   { label: "الرئيسية", href: "#home" },
-  { label: "من نحن", href: "#about" },
+{ label: "نتائج المرضى", href: "#about" },
   { label: "خدماتنا", href: "#services" },
   { label: "لماذا نحن", href: "#why-us" },
   { label: "آراء المرضى", href: "#testimonials" },

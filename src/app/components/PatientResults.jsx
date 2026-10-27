@@ -20,46 +20,46 @@ import {
 
 import { Plus, X, ArrowUpLeft } from "lucide-react";
 
-const features = [
+const results = [
   {
-    id: "modern-approach",
+    id: "patient-result-01",
     number: "01",
-    image: "/WhyChooseUs/FirstImg.jpg",
-    alt: "طبيب أسنان يشرح معلومات علاجية لمريض باستخدام شاشة",
-    title: "معرفة تواكب التطور",
-    subtitle: "المعرفة أساس العناية",
+    image: "/PatientResult/FirstImg.png",
+    alt: "صور مقارنة قبل وبعد للحالة الأولى",
+    title: "ابتسامة بثقة متجددة",
+    subtitle: "فرق يظهر في تفاصيل الابتسامة",
     description:
-      "لأن العناية الأفضل تبدأ من المعرفة، يجمع الدكتور بشار المسالمة بين الممارسة المهنية والاطلاع على أحدث أساليب طب الأسنان.",
+      "تُظهر الصور التغيّر في مظهر الابتسامة قبل العلاج وبعده، مع الاهتمام بتناسق الأسنان ومظهرها العام.",
   },
   {
-    id: "attention-to-detail",
+    id: "patient-result-02",
     number: "02",
-    image: "/WhyChooseUs/SecondImg.jpg",
-    alt: "فحص الأسنان باستخدام أدوات طب الأسنان",
-    title: "التفاصيل تصنع الفرق",
-    subtitle: "الاهتمام يبدأ من التفاصيل",
+    image: "/PatientResult/SecondImg.png",
+    alt: "صور مقارنة قبل وبعد للحالة الثانية",
+    title: "جمال في كل تفصيلة",
+    subtitle: "عناية بالمظهر والتناسق الطبيعي",
     description:
-      "نهتم بأدق التفاصيل في الرعاية السنية، لأن كل خطوة مدروسة تساهم في الوصول إلى صحة فموية أفضل.",
+      "مقارنة بصرية توضح اختلاف مظهر الأسنان والابتسامة بين الصورتين، وتبرز أهمية العناية بالتفاصيل الجمالية.",
   },
   {
-    id: "natural-smile",
+    id: "patient-result-03",
     number: "03",
-    image: "/WhyChooseUs/ThirdImg.jpg",
-    alt: "صورة تعبيرية لابتسامة طبيعية",
-    title: "ابتسامة تشبهك",
-    subtitle: "جمال طبيعي ومتناسق",
+    image: "/PatientResult/ThirdImg.png",
+    alt: "صور مقارنة قبل وبعد للحالة الثالثة",
+    title: "لمسة جمالية متناسقة",
+    subtitle: "تفاصيل تصنع فرقًا في الابتسامة",
     description:
-      "هدفنا ابتسامة طبيعية ومتناسقة، تنطلق من الاهتمام بصحة الفم والأسنان دون المبالغة في النتائج أو المظهر.",
+      "تُبرز الصور التغيّر في شكل الابتسامة وتناسق الأسنان. تختلف خيارات العلاج والنتائج بحسب تقييم كل حالة.",
   },
   {
-    id: "scientific-care",
+    id: "patient-result-04",
     number: "04",
-    image: "/WhyChooseUs/ForthImg.jpg",
-    alt: "صورة تعبيرية عن جمال الابتسامة وصحة الأسنان",
-    title: "رعاية بأسس علمية",
-    subtitle: "الدقة والمعايير العلمية",
+    image: "/PatientResult/ForthImg.png",
+    alt: "صور متعددة لنتائج الحالة الرابعة",
+    title: "لكل ابتسامة حكاية",
+    subtitle: "رحلة نحو ابتسامة أكثر تناسقًا",
     description:
-      "رعاية قائمة على الدقة والمعايير العلمية، مدعومة بتدريب الدكتور بشار المسالمة في نخبة من أبرز العيادات الألمانية.",
+      "مجموعة صور توضح جوانب مختلفة من مظهر الابتسامة، مع إبراز التفاصيل التي تسهم في جمالها وتناسقها.",
   },
 ];
 
@@ -86,7 +86,7 @@ function DialogPortal({ children }) {
   return createPortal(children, document.body);
 }
 
-function FeatureDialog({
+function ResultDialog({
   selected,
   onClose,
   dialogRef,
@@ -118,33 +118,31 @@ function FeatureDialog({
               ref={dialogRef}
               role="dialog"
               aria-modal="true"
-              aria-labelledby={`feature-dialog-title-${selected.id}`}
-              aria-describedby={`feature-dialog-description-${selected.id}`}
-              layoutId={`feature-card-${selected.id}`}
+              aria-labelledby={`result-dialog-title-${selected.id}`}
+              aria-describedby={`result-dialog-description-${selected.id}`}
+              layoutId={`result-card-${selected.id}`}
               transition={transition}
               dir="rtl"
               className="relative z-10 flex max-h-[90dvh] w-full max-w-[850px] flex-col overflow-y-auto rounded-[30px] border border-[#B3A681]/40 bg-background shadow-[0_30px_100px_rgba(0,0,0,0.25)]"
             >
               <motion.div
-                layoutId={`feature-image-${selected.id}`}
-                className="relative h-[240px] w-full shrink-0 overflow-hidden sm:h-[340px]"
+                layoutId={`result-image-${selected.id}`}
+                className="relative h-[270px] w-full shrink-0 overflow-hidden sm:h-[400px]"
               >
                 <Image
                   src={selected.image}
                   alt={selected.alt}
                   fill
                   sizes="(max-width: 640px) 100vw, 850px"
-                  className="object-cover"
+                  className="bg-[#E1D7B8]/25 object-contain"
                 />
-
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#172018]/20 to-transparent" />
               </motion.div>
 
               <button
                 ref={closeButtonRef}
                 type="button"
                 onClick={onClose}
-                aria-label="إغلاق التفاصيل"
+                aria-label="إغلاق تفاصيل الحالة"
                 className="absolute left-5 top-5 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-white/40 bg-background/95 text-[#3E4637] shadow-md transition-all duration-300 hover:rotate-90 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3E4637]"
               >
                 <X size={22} aria-hidden="true" />
@@ -152,8 +150,8 @@ function FeatureDialog({
 
               <div className="px-6 pb-8 pt-7 sm:px-10 sm:pb-10 sm:pt-9">
                 <motion.h3
-                  id={`feature-dialog-title-${selected.id}`}
-                  layoutId={`feature-title-${selected.id}`}
+                  id={`result-dialog-title-${selected.id}`}
+                  layoutId={`result-title-${selected.id}`}
                   className="text-[35px] leading-[1.4] text-[#3E4637] sm:text-[46px]"
                   style={{
                     fontFamily: '"AmiriCustom", serif',
@@ -183,7 +181,7 @@ function FeatureDialog({
                   />
 
                   <p
-                    id={`feature-dialog-description-${selected.id}`}
+                    id={`result-dialog-description-${selected.id}`}
                     className="max-w-2xl text-[17px] leading-[2] text-[#62685C] sm:text-[19px]"
                     style={{
                       fontFamily: '"TajawalCustom", sans-serif',
@@ -198,7 +196,8 @@ function FeatureDialog({
                       onClick={onClose}
                       className="inline-flex items-center gap-2 rounded-full bg-[#3E4637] px-6 py-3 text-[15px] text-white transition-colors duration-300 hover:bg-[#59654D] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3E4637]"
                     >
-                      العودة للبطاقات
+                      العودة للنتائج
+
                       <ArrowUpLeft
                         size={16}
                         aria-hidden="true"
@@ -215,7 +214,7 @@ function FeatureDialog({
   );
 }
 
-export default function WhyChooseUs() {
+export default function PatientResults() {
   const [selected, setSelected] = useState(null);
 
   const closeButtonRef = useRef(null);
@@ -290,20 +289,20 @@ export default function WhyChooseUs() {
     };
   }, [selected]);
 
-  function openFeature(feature, event) {
+  function openResult(result, event) {
     triggerRef.current = event.currentTarget;
-    setSelected(feature);
+    setSelected(result);
   }
 
-  function closeFeature() {
+  function closeResult() {
     setSelected(null);
   }
 
   return (
     <section
-      id="why-us"
+      id="patient-results"
       dir="rtl"
-      aria-labelledby="why-us-heading"
+      aria-labelledby="patient-results-heading"
       className="scroll-mt-28 overflow-hidden bg-background px-5 py-24 sm:px-8 md:py-28 lg:px-10"
     >
       <div className="mx-auto max-w-7xl">
@@ -333,13 +332,13 @@ export default function WhyChooseUs() {
             />
 
             <h2
-              id="why-us-heading"
+              id="patient-results-heading"
               className="text-[38px] leading-relaxed text-[#3E4637] sm:text-[52px] lg:text-[58px]"
               style={{
                 fontFamily: '"AmiriCustom", serif',
               }}
             >
-              لماذا تختارنا؟
+              نتائج المرضى
             </h2>
 
             <span
@@ -354,16 +353,17 @@ export default function WhyChooseUs() {
               fontFamily: '"TajawalCustom", sans-serif',
             }}
           >
-            لأن ابتسامتك تستحق عناية تقوم على
-            المعرفة، والدقة، والاهتمام بالتفاصيل.
+            تعرّف على بعض الحالات المعروضة من نتائج
+            المرضى، مع مراعاة اختلاف النتائج من حالة
+            إلى أخرى.
           </p>
         </motion.div>
 
-        <LayoutGroup id="why-us-layout">
+        <LayoutGroup id="patient-results-layout">
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {features.map((feature, index) => (
+            {results.map((result, index) => (
               <motion.div
-                key={feature.id}
+                key={result.id}
                 initial={{
                   opacity: 0,
                   y: reduceMotion ? 0 : 35,
@@ -384,24 +384,28 @@ export default function WhyChooseUs() {
               >
                 <motion.button
                   type="button"
-                  layoutId={`feature-card-${feature.id}`}
-                  onClick={(event) => openFeature(feature, event)}
+                  layoutId={`result-card-${result.id}`}
+                  onClick={(event) =>
+                    openResult(result, event)
+                  }
                   aria-haspopup="dialog"
-                  aria-label={`عرض تفاصيل ${feature.title}`}
+                  aria-label={`عرض تفاصيل ${result.title}`}
                   className="group relative flex h-[385px] w-full flex-col overflow-hidden rounded-[26px] border border-[#B3A681]/35 bg-[#E1D7B8] text-right shadow-[0_10px_35px_rgba(62,70,55,0.07)] outline-offset-4 transition-shadow duration-300 hover:shadow-[0_20px_50px_rgba(62,70,55,0.16)] focus-visible:outline-2 focus-visible:outline-[#3E4637]"
                   whileHover={
-                    reduceMotion ? undefined : { y: -5 }
+                    reduceMotion
+                      ? undefined
+                      : { y: -5 }
                   }
                   transition={transition}
                 >
                   <div className="relative h-[260px] w-full shrink-0 overflow-hidden">
                     <motion.div
-                      layoutId={`feature-image-${feature.id}`}
+                      layoutId={`result-image-${result.id}`}
                       className="relative h-full w-full"
                     >
                       <Image
-                        src={feature.image}
-                        alt={feature.alt}
+                        src={result.image}
+                        alt={result.alt}
                         fill
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -414,35 +418,37 @@ export default function WhyChooseUs() {
                       aria-hidden="true"
                       className="absolute right-4 top-4 rounded-full border border-white/30 bg-[#3E4637]/65 px-3 py-1.5 text-[12px] text-white backdrop-blur-md"
                     >
-                      {feature.number}
+                      {result.number}
                     </span>
                   </div>
 
                   <div className="flex min-h-0 flex-1 items-center justify-between gap-3 px-5 py-5">
                     <div className="min-w-0 flex-1">
                       <motion.h3
-                        layoutId={`feature-title-${feature.id}`}
+                        layoutId={`result-title-${result.id}`}
                         className="text-[24px] leading-[1.4] text-[#3E4637] xl:text-[26px]"
                         style={{
                           fontFamily: '"AmiriCustom", serif',
                         }}
                       >
-                        {feature.title}
+                        {result.title}
                       </motion.h3>
 
                       <p
                         className="mt-1 text-[13px] leading-6 text-[#62685C]"
                         style={{
-                          fontFamily:
-                            '"TajawalCustom", sans-serif',
+                          fontFamily: '"TajawalCustom", sans-serif',
                         }}
                       >
-                        {feature.subtitle}
+                        {result.subtitle}
                       </p>
                     </div>
 
                     <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#3E4637] text-white transition-transform duration-300 group-hover:rotate-90 group-hover:bg-[#59654D]">
-                      <Plus size={21} aria-hidden="true" />
+                      <Plus
+                        size={21}
+                        aria-hidden="true"
+                      />
                     </span>
                   </div>
                 </motion.button>
@@ -450,9 +456,9 @@ export default function WhyChooseUs() {
             ))}
           </div>
 
-          <FeatureDialog
+          <ResultDialog
             selected={selected}
-            onClose={closeFeature}
+            onClose={closeResult}
             dialogRef={dialogRef}
             closeButtonRef={closeButtonRef}
             transition={transition}

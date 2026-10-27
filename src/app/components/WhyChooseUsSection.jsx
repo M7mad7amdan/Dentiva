@@ -2,17 +2,16 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import GalleryAnimation from "./GalleryAnimation";
-
+import WhyChooseUsGallery from "./WhyChooseUsGallery";
 export default function AboutDoctor() {
   const reduceMotion = useReducedMotion();
 
   return (
     <section
-      id="about"
+      id="why-us"
       dir="rtl"
-      aria-labelledby="about-title"
-      className="scroll-mt-32 overflow-hidden bg-[#F5F1E7] py-20 md:py-28 lg:py-32"
+      aria-labelledby="why-us-heading"
+      className="scroll-mt-32 overflow-hidden bg-background py-20 md:py-28 lg:py-32"
     >
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <motion.div
@@ -38,14 +37,14 @@ export default function AboutDoctor() {
             </div>
 
             <h2
-              id="about-title"
-              className="shrink-0 whitespace-nowrap text-[clamp(26px,6vw,64px)] leading-[1.6] text-[#3E4637]"
+              id="why-us-heading"
+              className="shrink-0 whitespace-nowrap text-[clamp(30px,6vw,64px)] leading-[1.6] text-[#3E4637]"
               style={{
                 fontFamily: '"AmiriCustom", serif',
                 fontWeight: 400,
               }}
             >
-              د. بشار المسالمة
+              لماذا تختارنا؟
             </h2>
 
             <div
@@ -70,12 +69,14 @@ export default function AboutDoctor() {
           />
 
           <p
-            className="mt-4 text-[17px] tracking-wide text-[#9A8C70] sm:text-[19px]"
+            className="mt-4 max-w-2xl text-[16px] leading-8 text-[#62685C] sm:text-[18px]"
             style={{
               fontFamily: '"TajawalCustom", sans-serif',
             }}
           >
-            طبيب أسنان
+            لأن العناية المميزة تبدأ بالمعرفة والدقة
+            والاهتمام بكل تفصيلة، نحرص على تقديم
+            تجربة علاجية تجمع بين الراحة والثقة.
           </p>
         </motion.div>
 
@@ -91,7 +92,7 @@ export default function AboutDoctor() {
             ease: [0.22, 1, 0.36, 1],
           }}
         >
-          <GalleryAnimation />
+          <WhyChooseUsGallery />
         </motion.div>
       </div>
     </section>

@@ -14,6 +14,7 @@ import {
 } from "framer-motion";
 
 import { ArrowUpLeft, CalendarCheck } from "lucide-react";
+import DoctorBioCard from "./DoctorBioCard";
 
 const OLIVE = "#3E4637";
 const BEIGE = "#E1D7B8";
@@ -107,7 +108,8 @@ export default function Hero() {
       return;
     }
 
-    const rect = event.currentTarget.getBoundingClientRect();
+    const rect =
+      event.currentTarget.getBoundingClientRect();
 
     mx.set(
       ((event.clientX - rect.left) / rect.width - 0.5) * 2
@@ -170,6 +172,7 @@ export default function Hero() {
       />
 
       <div className="mx-auto grid min-h-[100svh] max-w-7xl items-center gap-10 px-6 pb-16 pt-28 sm:px-10 md:pt-32 lg:grid-cols-12 lg:gap-6 lg:px-12 lg:pb-20">
+        {/* Hero Content */}
         <div className="relative z-20 lg:col-span-7 lg:pe-4">
           <h1
             className="text-[clamp(3.4rem,10vw,8.5rem)] leading-[1.35] tracking-normal sm:leading-[1.3] lg:leading-[1.25]"
@@ -191,7 +194,9 @@ export default function Hero() {
           <motion.div
             aria-hidden="true"
             className="mt-7 h-px w-24 origin-right sm:mt-8"
-            style={{ backgroundColor: GOLD }}
+            style={{
+              backgroundColor: GOLD,
+            }}
             initial={reduce ? false : { scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{
@@ -204,7 +209,9 @@ export default function Hero() {
           <motion.p
             {...fade(0.55)}
             className="mt-7 max-w-[34rem] text-lg font-light leading-[2] sm:text-xl"
-            style={{ color: "#4D5645" }}
+            style={{
+              color: "#4D5645",
+            }}
           >
             في مركز الدكتور بشار المسالمة لطب الأسنان،
             نعتني بأسنانك بدقة واهتمام بالتفاصيل،
@@ -266,6 +273,7 @@ export default function Hero() {
           </motion.div>
         </div>
 
+        {/* Doctor Portrait */}
         <motion.div
           className="relative mx-auto w-full max-w-[26rem] lg:col-span-5 lg:max-w-none lg:justify-self-end"
           style={{
@@ -273,6 +281,7 @@ export default function Hero() {
           }}
         >
           <div className="relative mx-auto aspect-[4/5] w-full max-w-[28rem] lg:max-w-[30rem]">
+            {/* Decorative Frame */}
             <motion.div
               aria-hidden="true"
               className="absolute inset-0 rounded-t-full border"
@@ -290,6 +299,7 @@ export default function Hero() {
               }}
             />
 
+            {/* Doctor Image */}
             <div
               className="absolute inset-0 overflow-hidden rounded-t-full"
               style={{
@@ -332,8 +342,9 @@ export default function Hero() {
               />
             </div>
 
+            {/* Doctor Name */}
             <motion.div
-              className="absolute inset-x-0 bottom-6 mx-auto w-[78%] text-center"
+              className="pointer-events-none absolute inset-x-0 bottom-6 mx-auto w-[78%] text-center"
               initial={
                 reduce
                   ? false
@@ -371,6 +382,9 @@ export default function Hero() {
                 مركز طب الأسنان
               </p>
             </motion.div>
+
+            {/* Interactive Doctor Biography */}
+            <DoctorBioCard />
           </div>
         </motion.div>
       </div>
