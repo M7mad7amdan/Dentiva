@@ -18,7 +18,7 @@ import {
   useReducedMotion,
 } from "framer-motion";
 
-import { Plus, X, ArrowUpLeft } from "lucide-react";
+import { Plus, X, ArrowUpLeft, ChevronLeft } from "lucide-react";
 
 const results = [
   {
@@ -197,11 +197,7 @@ function ResultDialog({
                       className="inline-flex items-center gap-2 rounded-full bg-[#3E4637] px-6 py-3 text-[15px] text-white transition-colors duration-300 hover:bg-[#59654D] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3E4637]"
                     >
                       العودة للنتائج
-
-                      <ArrowUpLeft
-                        size={16}
-                        aria-hidden="true"
-                      />
+                      <ArrowUpLeft size={16} aria-hidden="true" />
                     </button>
                   </div>
                 </motion.div>
@@ -216,7 +212,9 @@ function ResultDialog({
 
 export default function PatientResults() {
   const [selected, setSelected] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
+  const carouselRef = useRef(null);
   const closeButtonRef = useRef(null);
   const dialogRef = useRef(null);
   const triggerRef = useRef(null);
@@ -275,7 +273,6 @@ export default function PatientResults() {
 
     return () => {
       cancelAnimationFrame(focusFrame);
-
       document.body.style.overflow = previousOverflow;
 
       document.removeEventListener(
@@ -298,6 +295,52 @@ export default function PatientResults() {
     setSelected(null);
   }
 
+  function handleCarouselScroll() {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+
+    const cards = Array.from(carousel.children);
+    const containerRect = carousel.getBoundingClientRect();
+    const containerCenter =
+      containerRect.left + containerRect.width / 2;
+
+    let closestIndex = 0;
+    let closestDistance = Infinity;
+
+    cards.forEach((card, index) => {
+      const rect = card.getBoundingClientRect();
+      const cardCenter = rect.left + rect.width / 2;
+      const distance = Math.abs(
+        cardCenter - containerCenter
+      );
+
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    setActiveIndex((current) =>
+      current === closestIndex ? current : closestIndex
+    );
+  }
+
+  function scrollToResult(index) {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+
+    const target = carousel.children[index];
+    if (!target) return;
+
+    target.scrollIntoView({
+      behavior: reduceMotion ? "instant" : "smooth",
+      block: "nearest",
+      inline: "center",
+    });
+
+    setActiveIndex(index);
+  }
+
   return (
     <section
       id="patient-results"
@@ -315,18 +358,15 @@ export default function PatientResults() {
             opacity: 1,
             y: 0,
           }}
-          viewport={{
-            once: true,
-            amount: 0.3,
-          }}
+          viewport={{ once: true, amount: 0.3 }}
           transition={{
             duration: reduceMotion ? 0 : 0.7,
             ease: [0.22, 1, 0.36, 1],
           }}
-          className="mb-14 flex flex-col items-center text-center"
+          className="mb-12 flex flex-col items-center text-center"
         >
           <div className="flex items-center justify-center gap-4 sm:gap-7">
-            <span
+            <div
               aria-hidden="true"
               className="h-px w-8 bg-[#B3A681]/75 sm:w-16"
             />
@@ -341,7 +381,7 @@ export default function PatientResults() {
               نتائج المرضى
             </h2>
 
-            <span
+            <div
               aria-hidden="true"
               className="h-px w-8 bg-[#B3A681]/75 sm:w-16"
             />
@@ -353,17 +393,25 @@ export default function PatientResults() {
               fontFamily: '"TajawalCustom", sans-serif',
             }}
           >
-            تعرّف على بعض الحالات المعروضة من نتائج
-            المرضى، مع مراعاة اختلاف النتائج من حالة
-            إلى أخرى.
+            لمحات من نتائج الحالات التي نعتز بمشاركتها،
+            حيث تُظهر كل ابتسامة تفاصيل مختلفة
+            من رحلة العناية بالأسنان.
           </p>
         </motion.div>
 
         <LayoutGroup id="patient-results-layout">
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {/* Mobile: Swipe Carousel / Tablet & Desktop: Grid */}
+          <div
+            ref={carouselRef}
+            dir="rtl"
+            onScroll={handleCarouselScroll}
+            aria-label="معرض نتائج المرضى"
+            className="flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain pb-4 [scrollbar-width:none] sm:grid sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:pb-0 lg:grid-cols-4 [&::-webkit-scrollbar]:hidden"
+          >
             {results.map((result, index) => (
               <motion.div
                 key={result.id}
+                className="w-full min-w-0 shrink-0 snap-center sm:w-auto sm:shrink"
                 initial={{
                   opacity: 0,
                   y: reduceMotion ? 0 : 35,
@@ -392,9 +440,7 @@ export default function PatientResults() {
                   aria-label={`عرض تفاصيل ${result.title}`}
                   className="group relative flex h-[385px] w-full flex-col overflow-hidden rounded-[26px] border border-[#B3A681]/35 bg-[#E1D7B8] text-right shadow-[0_10px_35px_rgba(62,70,55,0.07)] outline-offset-4 transition-shadow duration-300 hover:shadow-[0_20px_50px_rgba(62,70,55,0.16)] focus-visible:outline-2 focus-visible:outline-[#3E4637]"
                   whileHover={
-                    reduceMotion
-                      ? undefined
-                      : { y: -5 }
+                    reduceMotion ? undefined : { y: -5 }
                   }
                   transition={transition}
                 >
@@ -414,12 +460,12 @@ export default function PatientResults() {
 
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#172018]/25 via-transparent to-transparent" />
 
-                    <span
+                    <div
                       aria-hidden="true"
                       className="absolute right-4 top-4 rounded-full border border-white/30 bg-[#3E4637]/65 px-3 py-1.5 text-[12px] text-white backdrop-blur-md"
                     >
                       {result.number}
-                    </span>
+                    </div>
                   </div>
 
                   <div className="flex min-h-0 flex-1 items-center justify-between gap-3 px-5 py-5">
@@ -444,16 +490,63 @@ export default function PatientResults() {
                       </p>
                     </div>
 
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#3E4637] text-white transition-transform duration-300 group-hover:rotate-90 group-hover:bg-[#59654D]">
-                      <Plus
-                        size={21}
-                        aria-hidden="true"
-                      />
-                    </span>
+                    <div
+                      aria-hidden="true"
+                      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#3E4637] text-white transition-transform duration-300 group-hover:rotate-90 group-hover:bg-[#59654D]"
+                    >
+                      <Plus size={21} aria-hidden="true" />
+                    </div>
                   </div>
                 </motion.button>
               </motion.div>
             ))}
+          </div>
+
+          {/* Mobile Pagination */}
+          <div className="mt-5 flex flex-col items-center gap-2 sm:hidden">
+            <p className="flex items-center gap-2 text-[13px] text-[#62685C]">
+              اسحب لاستكشاف المزيد من النتائج
+              <ChevronLeft size={16} aria-hidden="true" />
+            </p>
+
+            <div className="flex items-center justify-center gap-1">
+              {results.map((result, index) => (
+                <button
+                  key={result.id}
+                  type="button"
+                  onClick={() => scrollToResult(index)}
+                  aria-label={`الانتقال إلى ${result.title}`}
+                  aria-current={
+                    activeIndex === index ? "true" : undefined
+                  }
+                  className="flex h-10 items-center justify-center px-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3E4637]"
+                >
+                  <motion.div
+                    animate={{
+                      width: activeIndex === index ? 24 : 7,
+                      backgroundColor:
+                        activeIndex === index
+                          ? "#3E4637"
+                          : "#C9BEA5",
+                    }}
+                    transition={{
+                      duration: reduceMotion ? 0 : 0.25,
+                    }}
+                    className="h-[7px] rounded-full"
+                  />
+                </button>
+              ))}
+            </div>
+
+            <p
+              dir="ltr"
+              className="text-[13px] tracking-wider text-[#84765B]"
+              aria-live="polite"
+            >
+              {String(activeIndex + 1).padStart(2, "0")}
+              {" / "}
+              {String(results.length).padStart(2, "0")}
+            </p>
           </div>
 
           <ResultDialog
