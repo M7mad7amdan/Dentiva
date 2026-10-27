@@ -1,26 +1,176 @@
+
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+
+  --background: #f5f1e7;
+  --foreground: #3e4637;
+
+  --color-olive: #3e4637;
+  --color-olive-hover: #505c46;
+
+  --color-beige: #e1d7b8;
+  --color-gold: #b3a681;
+  --color-cream: #f5f1e7;
+
+  --color-text-primary: #3e4637;
+  --color-text-secondary: #62685c;
+
+  --color-border: rgba(179, 166, 129, 0.35);
+
+  --font-tajawal: "TajawalCustom", sans-serif;
+  --font-amiri: "AmiriCustom", serif;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  --color-olive: var(--color-olive);
+  --color-beige: var(--color-beige);
+  --color-gold: var(--color-gold);
+  --color-cream: var(--color-cream);
+
+  --font-sans: var(--font-tajawal);
+  --font-serif: var(--font-amiri);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@font-face {
+  font-family: "TajawalCustom";
+  src:
+    url("/fonts/Tajawal-Light.woff2") format("woff2"),
+    url("/fonts/Tajawal-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "AmiriCustom";
+  src:
+    url("/fonts/Amiri-Regular.woff2") format("woff2"),
+    url("/fonts/Amiri-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "AmiriCustom";
+  src:
+    url("/fonts/Amiri-BoldItalic.woff2") format("woff2"),
+    url("/fonts/Amiri-BoldItalic.ttf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+html {
+  scroll-behavior: auto;
+  scroll-padding-top: 120px;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
+  margin: 0;
+  min-height: 100vh;
+
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+
+  font-family: var(--font-tajawal);
+  font-weight: 300;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-amiri);
+  font-weight: 400;
+}
+
+p {
+  line-height: 1.8;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-olive);
+  outline-offset: 4px;
+}
+
+img,
+video,
+svg {
+  max-width: 100%;
+}
+
+img,
+video {
+  height: auto;
+}
+
+section[id] {
+  scroll-margin-top: 120px;
+}
+
+::selection {
+  background-color: var(--color-beige);
+  color: var(--color-olive);
+}
+
+@media (max-width: 640px) {
+  html {
+    scroll-padding-top: 96px;
+  }
+
+  section[id] {
+    scroll-margin-top: 96px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
