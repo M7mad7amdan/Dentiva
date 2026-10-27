@@ -9,7 +9,11 @@ import {
   useTransform,
   useReducedMotion,
 } from "framer-motion";
-import { ChevronRight, Check } from "lucide-react";
+import {
+  ChevronRight,
+  ChevronLeft,
+  Check,
+} from "lucide-react";
 
 const WHATSAPP_NUMBER = "970594151151";
 
@@ -91,7 +95,6 @@ function SlideToWhatsApp({ serviceName }) {
 
   const textOpacity = useTransform(x, (value) => {
     if (maxDrag <= 0) return 1;
-
     return Math.max(0, 1 - (value / maxDrag) * 1.6);
   });
 
@@ -282,12 +285,75 @@ function ServiceCard({ service, index }) {
 export default function Services() {
   const reduceMotion = useReducedMotion();
 
+  const carouselRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // Keep the mobile carousel aligned to card widths.
+  function scrollToService(index) {
+    const carousel = carouselRef.current;
+
+    if (!carousel) return;
+
+    const targetIndex = Math.max(
+      0,
+      Math.min(index, services.length - 1)
+    );
+
+    const card = carousel.children[targetIndex];
+
+    if (!card) return;
+
+    carousel.scrollTo({
+      left: card.offsetLeft - carousel.offsetLeft,
+      behavior: reduceMotion ? "instant" : "smooth",
+    });
+
+    setActiveIndex(targetIndex);
+  }
+
+  // Detect the currently visible card after swiping.
+  function handleCarouselScroll() {
+    const carousel = carouselRef.current;
+
+    if (!carousel) return;
+
+    const cards = Array.from(carousel.children);
+
+    if (!cards.length) return;
+
+    const carouselCenter =
+      carousel.getBoundingClientRect().left +
+      carousel.clientWidth / 2;
+
+    let closestIndex = 0;
+    let closestDistance = Infinity;
+
+    cards.forEach((card, index) => {
+      const rect = card.getBoundingClientRect();
+      const cardCenter = rect.left + rect.width / 2;
+      const distance = Math.abs(
+        cardCenter - carouselCenter
+      );
+
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    setActiveIndex((current) =>
+      current === closestIndex
+        ? current
+        : closestIndex
+    );
+  }
+
   return (
     <section
       id="services"
       dir="rtl"
       aria-labelledby="services-title"
-      className="scroll-mt-28 bg-[#F5F1E7] px-5 py-20 sm:px-8 md:py-28 lg:px-10"
+      className="scroll-mt-28 bg-background px-5 py-20 sm:px-8 md:py-28 lg:px-10"
     >
       <div className="mx-auto max-w-7xl">
         <motion.div
@@ -335,7 +401,82 @@ export default function Services() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4">
+        {/* Mobile: Horizontal Carousel */}
+        <div className="sm:hidden">
+          <div className="mb-4 flex items-center justify-between gap-3">
+            <span className="inline-flex items-center gap-2 text-[13px] text-[#596154]">
+              اسحب لاستكشاف الخدمات
+              <ChevronLeft size={16} aria-hidden="true" />
+            </span>
+
+            <span
+              dir="ltr"
+              className="text-[13px] tracking-[0.08em] text-[#84765B]"
+              aria-live="polite"
+            >
+              {String(activeIndex + 1).padStart(2, "0")}
+              {" / "}
+              {String(services.length).padStart(2, "0")}
+            </span>
+          </div>
+
+          <div
+            ref={carouselRef}
+            dir="rtl"
+            onScroll={handleCarouselScroll}
+            aria-label="خدمات طب الأسنان"
+            aria-roledescription="عارض خدمات قابل للسحب"
+            className="flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {services.map((service, index) => (
+              <div
+                key={service.id}
+                className="w-full shrink-0 snap-center"
+              >
+                <ServiceCard
+                  service={service}
+                  index={index}
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Mobile Pagination */}
+          <div className="mt-4 flex items-center justify-center gap-2">
+            {services.map((service, index) => (
+              <button
+                key={service.id}
+                type="button"
+                onClick={() => scrollToService(index)}
+                aria-label={`الانتقال إلى خدمة ${service.title}`}
+                aria-current={
+                  activeIndex === index
+                    ? "true"
+                    : undefined
+                }
+                className="flex h-10 items-center justify-center px-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3E4637]"
+              >
+                <motion.span
+                  animate={{
+                    width:
+                      activeIndex === index ? 24 : 7,
+                    backgroundColor:
+                      activeIndex === index
+                        ? "#3E4637"
+                        : "#C9BEA5",
+                  }}
+                  transition={{
+                    duration: reduceMotion ? 0 : 0.25,
+                  }}
+                  className="block h-[7px] rounded-full"
+                />
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Tablet & Desktop: Original Grid */}
+        <div className="hidden grid-cols-2 gap-5 sm:grid lg:grid-cols-3 lg:gap-6 xl:grid-cols-4">
           {services.map((service, index) => (
             <ServiceCard
               key={service.id}
