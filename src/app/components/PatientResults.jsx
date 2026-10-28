@@ -1,4 +1,3 @@
-
 "use client";
 
 import {
@@ -18,7 +17,7 @@ import {
   useReducedMotion,
 } from "framer-motion";
 
-import { Plus, X, ArrowUpLeft, ChevronLeft } from "lucide-react";
+import { Plus, X, ArrowUpLeft, ChevronLeft, ChevronRight } from "lucide-react";
 
 const results = [
   {
@@ -152,7 +151,7 @@ function ResultDialog({
                 <motion.h3
                   id={`result-dialog-title-${selected.id}`}
                   layoutId={`result-title-${selected.id}`}
-                  className="text-[35px] leading-[1.4] text-[#3E4637] sm:text-[46px]"
+                  className="text-[37px] font-bold leading-[1.4] text-[#3E4637] sm:text-[48px]"
                   style={{
                     fontFamily: '"AmiriCustom", serif',
                   }}
@@ -329,16 +328,18 @@ export default function PatientResults() {
     const carousel = carouselRef.current;
     if (!carousel) return;
 
-    const target = carousel.children[index];
+    const targetIndex = Math.max(0, Math.min(index, results.length - 1));
+    const target = carousel.children[targetIndex];
     if (!target) return;
 
-    target.scrollIntoView({
+    const targetRect = target.getBoundingClientRect();
+    const viewportRect = carousel.getBoundingClientRect();
+    carousel.scrollBy({
+      left: targetRect.right - viewportRect.right,
       behavior: reduceMotion ? "instant" : "smooth",
-      block: "nearest",
-      inline: "center",
     });
 
-    setActiveIndex(index);
+    setActiveIndex(targetIndex);
   }
 
   return (
@@ -373,7 +374,7 @@ export default function PatientResults() {
 
             <h2
               id="patient-results-heading"
-              className="text-[38px] leading-relaxed text-[#3E4637] sm:text-[52px] lg:text-[58px]"
+              className="text-[43px] font-bold leading-[1.5] text-[#3E4637] sm:text-[56px] lg:text-[62px]"
               style={{
                 fontFamily: '"AmiriCustom", serif',
               }}
@@ -472,7 +473,7 @@ export default function PatientResults() {
                     <div className="min-w-0 flex-1">
                       <motion.h3
                         layoutId={`result-title-${result.id}`}
-                        className="text-[24px] leading-[1.4] text-[#3E4637] xl:text-[26px]"
+                        className="text-[27px] font-bold leading-[1.5] text-[#3E4637] xl:text-[29px]"
                         style={{
                           fontFamily: '"AmiriCustom", serif',
                         }}
@@ -549,6 +550,14 @@ export default function PatientResults() {
             </p>
           </div>
 
+            <div className="mt-2 flex items-center justify-center gap-4 sm:hidden">
+              <button type="button" onClick={() => scrollToResult(activeIndex - 1)} disabled={activeIndex === 0} aria-label="النتيجة السابقة" className="flex h-11 w-11 items-center justify-center rounded-full border border-[#B3A681]/60 text-[#3E4637] transition-colors hover:bg-[#E1D7B8]/60 disabled:cursor-not-allowed disabled:opacity-30 focus-visible:outline-2 focus-visible:outline-[#3E4637]">
+                <ChevronRight size={20} aria-hidden="true" />
+              </button>
+              <button type="button" onClick={() => scrollToResult(activeIndex + 1)} disabled={activeIndex === results.length - 1} aria-label="النتيجة التالية" className="flex h-11 w-11 items-center justify-center rounded-full bg-[#3E4637] text-white transition-colors hover:bg-[#59654D] disabled:cursor-not-allowed disabled:opacity-30 focus-visible:outline-2 focus-visible:outline-[#3E4637]">
+                <ChevronLeft size={20} aria-hidden="true" />
+              </button>
+            </div>
           <ResultDialog
             selected={selected}
             onClose={closeResult}

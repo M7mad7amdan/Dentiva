@@ -77,7 +77,7 @@ function AnimatedGradient({ colors }) {
     <div
       aria-hidden="true"
       className="pointer-events-none absolute inset-0 overflow-hidden"
-    >
+    >h2
       {colors.map((color, index) => {
         const position = gradientPositions[index];
 
@@ -252,15 +252,16 @@ export default function NumbersSection() {
         >
           
 
-          <h2
-            id="numbers-heading"
-            className="text-[40px] leading-[1.5] text-[#3E4637] sm:text-[54px]"
-            style={{
-              fontFamily: '"AmiriCustom", serif',
-            }}
-          >
-            نظرة أقرب إلى خدماتنا
-          </h2>
+       <h2
+  id="numbers-heading"
+  className="text-[42px] font-bold leading-[1.5] text-[#3E4637] sm:text-[56px]"
+  style={{
+    fontFamily: '"AmiriCustom", serif',
+    fontWeight: 700,
+  }}
+>
+  نظرة أقرب إلى خدماتنا
+</h2>
 
           <p
             className="mx-auto mt-3 max-w-xl text-[15px] leading-8 text-[#62685C] sm:text-[17px]"

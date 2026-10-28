@@ -1,7 +1,7 @@
 
 import NavBar from "./components/NavBar";
 import Hero from "./components/Hero";
-import NumbersSection from "./components/NumbersSection";
+// import NumbersSection from "./components/NumbersSection";
 import WhyChooseUsSection from "./components/WhyChooseUsSection";
 import Services from "./components/Services";
 import PatientResults from "./components/PatientResults";
@@ -23,7 +23,7 @@ export default function Home() {
         <Hero />
 
         {/* 02 — Numbers */}
-        <NumbersSection />
+        {/* <NumbersSection /> */}
 
         {/* 03 — Why Choose Us */}
         <WhyChooseUsSection />

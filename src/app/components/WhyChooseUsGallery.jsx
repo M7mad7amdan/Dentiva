@@ -1,10 +1,9 @@
-
 "use client";
 
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowUpLeft, ChevronLeft } from "lucide-react";
+import { ArrowUpLeft, ChevronLeft, ChevronRight } from "lucide-react";
 
 const WHATSAPP_NUMBER = "970594151151";
 
@@ -51,7 +50,7 @@ function GalleryContent({
     <div className="flex items-end justify-between gap-3">
       <div className="min-w-0 flex-1 text-right">
         <h3
-          className={`mb-2 leading-[1.5] text-white ${
+          className={`mb-2 font-bold leading-[1.5] text-white ${
             compact
               ? "text-[23px] sm:text-[25px]"
               : "text-[25px] xl:text-[28px]"
@@ -98,7 +97,7 @@ function GalleryContent({
   );
 }
 
-export default function GalleryAnimation({
+export default function WhyChooseUsGallery({
   images = defaultImages,
 }) {
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -152,6 +151,20 @@ export default function GalleryAnimation({
     setActiveMobileIndex((previous) =>
       previous === closest ? previous : closest
     );
+  }
+
+  function scrollToImage(index) {
+    const container = galleryRef.current;
+    if (!container) return;
+    const targetIndex = Math.max(0, Math.min(index, images.length - 1));
+    const card = container.querySelectorAll("[data-gallery-card]")[targetIndex];
+    if (!card) return;
+    const distance = card.getBoundingClientRect().right - container.getBoundingClientRect().right;
+    container.scrollBy({
+      left: distance,
+      behavior: reduceMotion ? "instant" : "smooth",
+    });
+    setActiveMobileIndex(targetIndex);
   }
 
   if (!images.length) return null;
@@ -339,6 +352,14 @@ export default function GalleryAnimation({
             {" / "}
             {String(images.length).padStart(2, "0")}
           </span>
+        </div>
+        <div className="mt-4 flex items-center justify-center gap-4">
+          <button type="button" onClick={() => scrollToImage(activeMobileIndex - 1)} disabled={activeMobileIndex === 0} aria-label="الصورة السابقة" className="flex h-11 w-11 items-center justify-center rounded-full border border-[#B3A681]/60 text-[#3E4637] transition-colors hover:bg-[#E1D7B8]/60 disabled:cursor-not-allowed disabled:opacity-30 focus-visible:outline-2 focus-visible:outline-[#3E4637]">
+            <ChevronRight size={20} aria-hidden="true" />
+          </button>
+          <button type="button" onClick={() => scrollToImage(activeMobileIndex + 1)} disabled={activeMobileIndex === images.length - 1} aria-label="الصورة التالية" className="flex h-11 w-11 items-center justify-center rounded-full bg-[#3E4637] text-white transition-colors hover:bg-[#59654D] disabled:cursor-not-allowed disabled:opacity-30 focus-visible:outline-2 focus-visible:outline-[#3E4637]">
+            <ChevronLeft size={20} aria-hidden="true" />
+          </button>
         </div>
       </div>
     </>

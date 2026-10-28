@@ -164,15 +164,16 @@ export default function Testimonials() {
             />
           </div>
 
-          <h2
-            id="testimonials-heading"
-            className="text-[46px] leading-[1.4] text-[#3E4637] sm:text-[58px] lg:text-[66px]"
-            style={{
-              fontFamily: '"AmiriCustom", serif',
-            }}
-          >
-            كلمات تعبّر عن الثقة
-          </h2>
+         <h2
+  id="testimonials-heading"
+  className="text-[46px] font-bold leading-[1.4] text-[#3E4637] sm:text-[58px] lg:text-[66px]"
+  style={{
+    fontFamily: '"AmiriCustom", serif',
+    fontWeight: 700,
+  }}
+>
+  كلمات تعبّر عن الثقة
+</h2>
 
           <p
             className="mx-auto mt-3 max-w-xl text-[16px] leading-8 text-[#62685C] sm:text-[17px]"

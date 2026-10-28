@@ -131,17 +131,17 @@ export default function BookingForm() {
           </p>
 
           <h2
-            id="booking-heading"
-            className="text-[50px] leading-[1.45] text-[#3E4637] sm:text-[65px] lg:text-[75px]"
-            style={{
-              fontFamily: '"AmiriCustom", serif',
-            }}
-          >
-            موعدك يبدأ
-            <br />
-            من هنا
-          </h2>
-
+  id="booking-heading"
+  className="text-[50px] font-bold leading-[1.45] text-[#3E4637] sm:text-[65px] lg:text-[75px]"
+  style={{
+    fontFamily: '"AmiriCustom", serif',
+    fontWeight: 700,
+  }}
+>
+  موعدك يبدأ
+  <br />
+  من هنا
+</h2>
           <div
             aria-hidden="true"
             className="mx-auto mt-5 h-px w-20 bg-[#B3A681] lg:mr-0 lg:ml-auto"

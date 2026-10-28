@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useRef, useState } from "react";
@@ -256,8 +255,9 @@ function ServiceCard({ service, index }) {
           />
         </div>
 
+        <div className="text-center">
         <h3
-          className="text-[27px] leading-[1.55] text-[#3E4637] sm:text-[28px]"
+          className="text-[33px] font-bold leading-[1.5] text-[#3E4637] sm:text-[34px]"
           style={{
             fontFamily: '"AmiriCustom", serif',
           }}
@@ -273,6 +273,7 @@ function ServiceCard({ service, index }) {
         >
           {service.description}
         </p>
+        </div>
       </div>
 
       <div className="mt-7">
@@ -303,8 +304,10 @@ export default function Services() {
 
     if (!card) return;
 
-    carousel.scrollTo({
-      left: card.offsetLeft - carousel.offsetLeft,
+    const cardRect = card.getBoundingClientRect();
+    const viewportRect = carousel.getBoundingClientRect();
+    carousel.scrollBy({
+      left: cardRect.right - viewportRect.right,
       behavior: reduceMotion ? "instant" : "smooth",
     });
 
@@ -377,7 +380,7 @@ export default function Services() {
         >
           <h2
             id="services-title"
-            className="text-[42px] leading-relaxed text-[#3E4637] sm:text-[54px] lg:text-[62px]"
+            className="text-[48px] font-bold leading-[1.45] text-[#3E4637] sm:text-[58px] lg:text-[66px]"
             style={{
               fontFamily: '"AmiriCustom", serif',
             }}
@@ -475,6 +478,15 @@ export default function Services() {
           </div>
         </div>
 
+{/* Mobile navigation buttons */}
+          <div className="mt-3 flex items-center justify-center gap-4 sm:hidden">
+            <button type="button" onClick={() => scrollToService(activeIndex - 1)} disabled={activeIndex === 0} aria-label="الخدمة السابقة" className="flex h-11 w-11 items-center justify-center rounded-full border border-[#B3A681]/60 text-[#3E4637] transition-colors hover:bg-[#E1D7B8]/60 disabled:cursor-not-allowed disabled:opacity-30 focus-visible:outline-2 focus-visible:outline-[#3E4637]">
+              <ChevronRight size={20} aria-hidden="true" />
+            </button>
+            <button type="button" onClick={() => scrollToService(activeIndex + 1)} disabled={activeIndex === services.length - 1} aria-label="الخدمة التالية" className="flex h-11 w-11 items-center justify-center rounded-full bg-[#3E4637] text-white transition-colors hover:bg-[#59654D] disabled:cursor-not-allowed disabled:opacity-30 focus-visible:outline-2 focus-visible:outline-[#3E4637]">
+              <ChevronLeft size={20} aria-hidden="true" />
+            </button>
+          </div>
         {/* Tablet & Desktop: Original Grid */}
         <div className="hidden grid-cols-2 gap-5 sm:grid lg:grid-cols-3 lg:gap-6 xl:grid-cols-4">
           {services.map((service, index) => (
